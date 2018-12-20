@@ -1,0 +1,32 @@
+Create a SPA with 3 pages
+
+Login / Register / Home
+
+if you enter the url , check if you have ever logged in
+
+if true , go to Home page
+
+if else , go to login page
+		login page has 2 input boxes (username and password [username will be email]) , one Button named "Login" and one link to register page
+		use Login API
+			
+		Register page has 3 input boxes ( full name , username and password) and 2 buttons named "Register" and "Cancel"
+		if you press Register , create a user with API and go to login page
+		if you press Cancel , just go to login page
+					
+Home Page just has one caption (h1 caption called "Hi")
+
+Login
+
+	Method : get
+	URL : api/user?username=[USERNAME]
+
+Register
+
+	Method : post
+	Data : Object (It will be JSON object and it has 3 properties = full_name , email and password )
+	URL : api/add_user
+
+
+
+
