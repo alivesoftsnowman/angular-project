@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>              
+     <div ng-controller="formCtrl" ng-app = "myApp">
+        <form novalidate>
+          FullName : <br>
+          <input type="text" ng-model="new_user_fullname">
+          <br>
+          NickName : <br>
+          <input type="text" ng-model="new_user_name">
+          <br><br>
+          Password : <br>
+          <input type="password" ng-model="new_user_pass">
+          <br><br>
+          
+          <button ng-click="register_req()">register</button>
+        </form>
+
+      </div>
+    </body>
+</html>

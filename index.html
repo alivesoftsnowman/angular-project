@@ -5,9 +5,6 @@
 
 <body ng-app="myApp">
 
-    <p><a href="#/!">Main</a></p>
-
-    <a href="#!login/register/home">check</a>
 
 
     <div ng-view></div>
@@ -17,64 +14,113 @@
         app.config(function ($routeProvider) {
             $routeProvider
                 .when("/", {
-                    templateUrl: "main.htm"
+                    templateUrl: "loading.htm",
+                    controller : "session_check"
+                }) .when("/main", {
+                    templateUrl: "main.htm",
+                    controller : "session_out"
                 })
                 .when("/login/register/home", {
+                    templateUrl: "loading.htm",
+                    controller : "session_check"
+                }).when("/login/login_page", {
                     templateUrl: "check.htm",
+                    controller: "formCtrl"
+                })
+                .when("/login/register", {
+                    templateUrl: "register.htm",
                     controller: "formCtrl"
                 });
         })
         
-        // .config(function($stateProvider, $urlRouterProvider) {
-        //     $stateProvider
-
-        //         .state('app', {
-        //         url: '/app',
-        //         abstract: true,
-        //         templateUrl: 'templates/menu.html',
-        //         controller: 'AppCtrl'
-        //     })
-
-        //     .state('app.start', {
-        //         url: '/start',
-        //         views: {
-        //             'menuContent': {
-        //             templateUrl: 'templates/start.html',
-        //             controller: 'StartCtrl'
-        //             }
-        //         }
-        //         })
-        //     })
-
-
-
         app.controller('formCtrl', function ($scope, $http, $location) {
             $scope.login = function () {
-                var send_data = { user_name: $scope.user_name, user_pass: $scope.user_pass };
-                console.log(send_data);
-                $http.post("checkauth.php", send_data).then(function (res) {
-                    var msg = res.data.msg;
-                    // console.log(user.msg);
-                    $scope.mydata = res.data;
-                    if (msg == 'success') {
-                        console.log(res.data);
-                        if(res.data=="yes")$location.url();
-
+                var send_data = { log_type :"login",user_name: $scope.user_name, user_pass: $scope.user_pass };
+               // console.log(send_data);
+                $http.post("checkauth.php", send_data).then(function (res) {              
+                    console.log(res);
+                    if (res.data == 'yes') {
+                        location.href = "#!main";
                         // $rootScope.saveDataLocalStorage($rootScope.loginData);
                         //console.log("save data:"+JSON.stringify($rootScope.loginData));
+                    }else{
+                        $scope.mydata ="worng user and password";
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                });
+            }
+            $scope.register = function(){
+                location.href = "#!login/register";
+            }
+
+            $scope.register_req = function () {
+                var send_data = { log_type :"register",full_name: $scope.new_user_fullname, user_name:$scope.new_user_name, user_pass: $scope.new_user_pass };
+               // console.log(send_data);
+                $http.post("checkauth.php", send_data).then(function (res) {              
+                    console.log(res.data);
+                    if (res.data == 'yes') {
+                        location.href = "#!main";
+                        // $rootScope.saveDataLocalStorage($rootScope.loginData);
+                        //console.log("save data:"+JSON.stringify($rootScope.loginData));
+                    }else{
+                        $scope.mydata ="worng user and password";
                     }
                 }).catch(function (err) {
                     console.log(err);
                 });
             }
 
-            $scope.gotoMain = function(){
-
-            }
-
-
             // $scope.login();
         });
+
+        app.controller("session_check", function($scope, $http){
+
+            $scope.session_req = function () {
+                var send_data = { log_type :"session_check"};
+               // console.log(send_data);
+                $http.post("checkauth.php", send_data).then(function (res) {              
+                    console.log(res);
+                    if (res.data == 'yes') {
+                        location.href = "#!main";
+                        // $rootScope.saveDataLocalStorage($rootScope.loginData);
+                        //console.log("save data:"+JSON.stringify($rootScope.loginData));
+                    }else{
+                        location.href = "#!login/login_page";
+                        $scope.mydata ="worng user and password";
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                });
+            }
+            $scope.session_req();
+
+
+        })
+
+        app.controller("session_out", function($scope, $http){
+
+        $scope.log_out = function () {
+            var send_data = { log_type :"session_destroy"};
+        // console.log(send_data);
+            $http.post("checkauth.php", send_data).then(function (res) {              
+                console.log(res);
+                if (res.data == 'yes') {
+                    location.href = "#/!";
+                    // $rootScope.saveDataLocalStorage($rootScope.loginData);
+                    //console.log("save data:"+JSON.stringify($rootScope.loginData));
+                }else{
+                    location.href = "#!login/login_page";
+                    $scope.mydata ="worng user and password";
+                }
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+
+
+        })
+    
 
 
 

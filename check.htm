@@ -2,9 +2,6 @@
 <html lang="en">
 <body>              
 
-      <a ng-click="gotoMain()" href="#!main" >gotoMain</a>
-
-    
      <div ng-controller="formCtrl" ng-app = "myApp">
         <form novalidate>
           UserName : <br>
@@ -12,14 +9,11 @@
           <br><br>
           Password : <br>
           <input type="password" ng-model="user_pass">
-          <br><br>
-          
+          <br><br>          
           <button ng-click="login()">login</button>
+          
           <button ng-click="register()">register</button>
         </form>
-        <p>name = {{user_name}}</p>
-        <p>pass = {{user_pass}}</p>
-
         <p>response = {{mydata}}</p>
 
       </div>
